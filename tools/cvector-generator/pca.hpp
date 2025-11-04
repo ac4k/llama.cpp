@@ -6,6 +6,10 @@
 #include "ggml-cuda.h"
 #endif
 
+#ifdef GGML_USE_AC4K
+#include "ggml-ac4k.h"
+#endif
+
 #ifdef GGML_USE_METAL
 #include "ggml-metal.h"
 #endif

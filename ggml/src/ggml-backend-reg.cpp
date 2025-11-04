@@ -33,6 +33,10 @@
 #include "ggml-cuda.h"
 #endif
 
+#ifdef GGML_USE_AC4K
+#include "ggml-ac4k.h"
+#endif
+
 #ifdef GGML_USE_METAL
 #include "ggml-metal.h"
 #endif
@@ -184,6 +188,9 @@ struct ggml_backend_registry {
     ggml_backend_registry() {
 #ifdef GGML_USE_CUDA
         register_backend(ggml_backend_cuda_reg());
+#endif
+#ifdef GGML_USE_AC4K
+        register_backend(ggml_backend_ac4k_reg());
 #endif
 #ifdef GGML_USE_METAL
         register_backend(ggml_backend_metal_reg());
@@ -599,6 +606,7 @@ void ggml_backend_load_all_from_path(const char * dir_path) {
     ggml_backend_load_best("blas", silent, dir_path);
     ggml_backend_load_best("cann", silent, dir_path);
     ggml_backend_load_best("cuda", silent, dir_path);
+    ggml_backend_load_best("ac4k", silent, dir_path);
     ggml_backend_load_best("hip", silent, dir_path);
     ggml_backend_load_best("metal", silent, dir_path);
     ggml_backend_load_best("rpc", silent, dir_path);

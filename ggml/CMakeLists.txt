@@ -205,6 +205,18 @@ set   (GGML_CUDA_COMPRESSION_MODE "size" CACHE STRING
                                             "ggml: cuda link binary compression mode; requires cuda 12.8+")
 set_property(CACHE GGML_CUDA_COMPRESSION_MODE PROPERTY STRINGS "none;speed;balance;size")
 
+option(GGML_AC4K                            "ggml: use AC4K"                                  OFF)
+option(GGML_AC4K_FORCE_MMQ                  "ggml: use mmq kernels instead of cuBLAS"         OFF)
+option(GGML_AC4K_FORCE_CUBLAS               "ggml: always use cuBLAS instead of mmq kernels"  OFF)
+set   (GGML_AC4K_PEER_MAX_BATCH_SIZE "128" CACHE STRING "ggml: max. batch size for using peer access")
+option(GGML_AC4K_NO_PEER_COPY               "ggml: do not use peer to peer copies"            OFF)
+option(GGML_AC4K_NO_VMM                     "ggml: do not try to use CUDA VMM"                OFF)
+option(GGML_AC4K_FA                         "ggml: compile ggml FlashAttention CUDA kernels"  ON)
+option(GGML_AC4K_FA_ALL_QUANTS              "ggml: compile all quants for FlashAttention"     OFF)
+option(GGML_AC4K_GRAPHS                     "ggml: use CUDA graphs (llama.cpp only)"          ${GGML_AC4K_GRAPHS_DEFAULT})
+set   (GGML_AC4K_COMPRESSION_MODE "size" CACHE STRING "ggml: cuda link binary compression mode; requires cuda 12.8+")
+set_property(CACHE GGML_AC4K_COMPRESSION_MODE PROPERTY STRINGS "none;speed;balance;size")
+
 option(GGML_HIP                             "ggml: use HIP"                                   OFF)
 option(GGML_HIP_GRAPHS                      "ggml: use HIP graph, experimental, slow"         OFF)
 option(GGML_HIP_NO_VMM                      "ggml: do not try to use HIP VMM"                 ON)
@@ -311,6 +323,7 @@ set(GGML_PUBLIC_HEADERS
     include/ggml-cann.h
     include/ggml-cpp.h
     include/ggml-cuda.h
+    include/ggml-ac4k.h
     include/ggml-opt.h
     include/ggml-metal.h
     include/ggml-rpc.h
